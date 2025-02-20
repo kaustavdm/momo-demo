@@ -104,6 +104,12 @@ func (s *Scheduler) AddTask(task types.Task) error {
 	}
 
 	s.tasks[task.ID] = task
+
+	t, err := json.Marshal(task)
+	if err != nil {
+		return err
+	}
+	s.nc.Publish("task.dispatch", t)
 	return nil
 }
 

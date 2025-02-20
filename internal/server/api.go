@@ -119,6 +119,7 @@ func (s *APIServer) handleTasks() http.HandlerFunc {
 			// Create new task
 			var task types.Task
 			if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
+				s.logger.Printf("Error encoding JSON: %v", err)
 				s.writeError(w, "Invalid request body", http.StatusBadRequest)
 				return
 			}
